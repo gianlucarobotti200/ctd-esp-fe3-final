@@ -14,16 +14,11 @@ const Navbar = () => {
 
   return (
     <nav className={state.theme}>
+
       <li><Link to="/home">Home</Link></li>
       <li><Link to="/favs">Favs</Link></li>
-      <li><Link to="/dentist">Details</Link></li>
       <li><Link to="/contact">Contact</Link></li>
-      <button
-        className={state.theme}
-        onClick={handleThemeToggle}
-      >
-        Change theme
-      </button>
+      <button className={state.theme} onClick={handleThemeToggle}>Change theme</button>
     </nav>
   );
 };

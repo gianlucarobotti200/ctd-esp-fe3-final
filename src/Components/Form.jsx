@@ -1,4 +1,4 @@
-import React, {useState, useContext} from "react";
+import React, { useState, useContext } from "react";
 import { ContextGlobal } from "./utils/global.context";
 
 const Form = () => {
@@ -24,20 +24,17 @@ const Form = () => {
         ...prevErrors,
         name: true,
       }));
-      setFormData((prevData) => ({
-        ...prevData,
-        name: nameValue, 
-      }));
     } else {
       setErrors((prevErrors) => ({
         ...prevErrors,
         name: false,
       }));
-      setFormData((prevData) => ({
-        ...prevData,
-        name: nameValue,
-      }));
     }
+
+    setFormData((prevData) => ({
+      ...prevData,
+      name: nameValue,
+    }));
   };
 
   const handleEmail = (e) => {
@@ -50,44 +47,45 @@ const Form = () => {
         ...prevErrors,
         email: true,
       }));
-      setFormData((prevData) => ({
-        ...prevData,
-        email: emailValue, 
-      }));
     } else {
       setErrors((prevErrors) => ({
         ...prevErrors,
         email: false,
       }));
-      setFormData((prevData) => ({
-        ...prevData,
-        email: emailValue,
-      }));
     }
+
+    setFormData((prevData) => ({
+      ...prevData,
+      email: emailValue,
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
-    setSuccessMessage(`${formData.name}, tu correo de contacto ha sido enviado correctamente.`);
-  
+
+    if (errors.name || errors.email) {
+      setSuccessMessage("Por favor, completa el formulario correctamente.");
+    } else {
+      setSuccessMessage(`${formData.name}, tu correo de contacto ha sido enviado correctamente.`);
+    }
+
     setTimeout(() => {
       setSuccessMessage("");
-    }, 5000);
+    }, 10000);
   };
 
   return (
     <div className={state.theme}>
       <form onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Ingresa tu nombre" value={formData.name} onChange={handleName}/>
-        {errors.name && <span className="error">El nombre es inválido</span>}
+        <input type="text" name="name" placeholder="Ingresa tu nombre" value={formData.name} onChange={handleName} />
+        {errors.name && <span className="error-message">El nombre es inválido</span>}
 
-        <input type="email" name="email" placeholder="Ingresa tu email" value={formData.email} onChange={handleEmail}/>
-        {errors.email && <span className="error">El correo electrónico es inválido</span>}
+        <input type="email" name="email" placeholder="Ingresa tu email" value={formData.email} onChange={handleEmail} />
+        {errors.email && <span className="error-message">El correo electrónico es inválido</span>}
 
         <button type="submit">Enviar</button>
       </form>
-      <div className="success-message">{successMessage}</div>
+      {successMessage && <div className="error-message">{successMessage}</div>}
     </div>
   );
 };
